@@ -28,7 +28,11 @@ sub init {
     if ( my $opts = setting('kiokudb_backend_opts') ) {
         if ( ref $opts and ref $opts eq 'HASH' ) {
             %opts = %{$opts};
+        } else {
+            croak 'kiokudb_backend_opts must be a hash reference';
         }
+    } else {
+        croak 'Missing kiokudb_backend_opts';
     }
 
     defined $opts{'create'} or $opts{'create'} = 1;
@@ -75,8 +79,6 @@ sub flush {
 
     return $db->insert( id => $self );
 }
-
-
 
 1;
 
