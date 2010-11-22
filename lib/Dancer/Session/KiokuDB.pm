@@ -33,8 +33,8 @@ sub init {
 
     defined $opts{'create'} or $opts{'create'} = 1;
 
-    Dancer::Logger::warn("Did not provide default session's KiokuDB backend");
-    Dancer::Logger::warn("Using default: 'DBI'");
+    Dancer::Logger::warning("Did not provide default session KiokuDB backend");
+    Dancer::Logger::warning("Using default: 'DBI'");
 
     Dancer::ModuleLoader->load($class)
         or croak "Cannot load $class: perhaps you need to install it?";
