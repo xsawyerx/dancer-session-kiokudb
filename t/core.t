@@ -17,7 +17,7 @@ like(
     'kiokudb_backend_opts is required',
 );
 
-setting kiokudb_backend_opts => [];
+set kiokudb_backend_opts => [];
 
 like(
     exception { Dancer::Session::KiokuDB->new },
@@ -37,7 +37,7 @@ SKIP: {
 
     my $dsn = "dbi:SQLite:dbname=$file";
 
-    setting kiokudb_backend_opts => { dsn => $dsn };
+    set kiokudb_backend_opts => { dsn => $dsn };
 
     my $session;
     is(
