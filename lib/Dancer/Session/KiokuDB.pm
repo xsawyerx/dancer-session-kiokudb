@@ -63,11 +63,12 @@ sub retrieve {
     my $scope = $db->new_scope;
 
     # return object
-    return $db->retrieve($id);
+    return $db->lookup($id);
 }
 
 sub destroy {
-    my $self = shift;
+    my $self  = shift;
+    my $scope = $db->new_scope;
 
     $db->delete($self);
 }
