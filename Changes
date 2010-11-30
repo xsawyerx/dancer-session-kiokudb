@@ -1,3 +1,7 @@
+0.03    30.11.10
+        * Improving documentation.
+        * Updating warning about new default backend.
+
 0.02    30.11.10
         * Using KiokuDB::Backend::Hash as default now.
         * kiokudb_backend_opts no longer required.
