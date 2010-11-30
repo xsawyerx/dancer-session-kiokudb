@@ -6,9 +6,9 @@ package Dancer::Session::KiokuDB;
 use Carp;
 use base 'Dancer::Session::Abstract';
 
-# to have access to configuration data and a helper for paths
 use KiokuDB;
 
+# to have access to configuration data and a helper for paths
 use Dancer::Logger;
 use Dancer::Config    'setting';
 use Dancer::FileUtils 'path';
