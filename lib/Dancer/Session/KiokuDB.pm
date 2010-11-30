@@ -22,6 +22,7 @@ sub init {
     my $class   = "KiokuDB::Backend::$backend";
     my %opts    = ();
 
+    # making sure that if we get backend opts, they're a hashref
     if ( my $opts = setting('kiokudb_backend_opts') ) {
         if ( ref $opts and ref $opts eq 'HASH' ) {
             %opts = %{$opts};
@@ -30,10 +31,11 @@ sub init {
         }
     }
 
+    # default is to create
     defined $opts{'create'} or $opts{'create'} = 1;
 
     if ( not $warned ) {
-        Dancer::Logger::warning("No session KiokuDB backend, using 'DBI'");
+        Dancer::Logger::warning("No session KiokuDB backend, using 'Hash'");
         $warned++;
     }
 
