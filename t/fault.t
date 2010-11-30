@@ -10,10 +10,10 @@ use Dancer::Session::KiokuDB;
 use Test::More tests => 2, import => ['!pass'];
 use Test::Fatal;
 
-like(
+is(
     exception { Dancer::Session::KiokuDB->new },
-    qr/^Missing kiokudb_backend_opts/,
-    'kiokudb_backend_opts is required',
+    undef,
+    'kiokudb_backend_opts not required',
 );
 
 set kiokudb_backend_opts => [];

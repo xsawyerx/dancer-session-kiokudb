@@ -18,7 +18,7 @@ my ( $db, $warned );
 
 sub init {
     my $self    = shift;
-    my $backend = setting('kiokudb_backend') || 'DBI';
+    my $backend = setting('kiokudb_backend') || 'Hash';
     my $class   = "KiokuDB::Backend::$backend";
     my %opts    = ();
 
@@ -28,8 +28,6 @@ sub init {
         } else {
             croak 'kiokudb_backend_opts must be a hash reference';
         }
-    } else {
-        croak 'Missing kiokudb_backend_opts';
     }
 
     defined $opts{'create'} or $opts{'create'} = 1;
