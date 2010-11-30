@@ -9,45 +9,20 @@ use Dancer::Session::KiokuDB;
 
 use Test::More tests => 4, import => ['!pass'];
 use Test::Fatal;
-use Test::TinyMocker;
 
-like(
-    exception { Dancer::Session::KiokuDB->new },
-    qr/^Missing kiokudb_backend_opts/,
-    'kiokudb_backend_opts is required',
+set kiokudb_backend      => 'Hash';
+set kiokudb_backend_opts => {};
+
+my $session;
+is(
+    exception { $session = Dancer::Session::KiokuDB->create },
+    undef,
+    'Create session object successfully',
 );
 
-set kiokudb_backend_opts => [];
+isa_ok( $session, 'Dancer::Session::KiokuDB' );
+ok( $session->id, 'session has ID' );
 
-like(
-    exception { Dancer::Session::KiokuDB->new },
-    qr/^kiokudb_backend_opts must be a hash reference/,
-    'kiokudb_backend_opts should be hashref',
-);
-
-SKIP: {
-    skip 'The following tests require KiokuDB::Backend::DBI' => 2
-        unless Dancer::ModuleLoader->load('KiokuDB::Backend::DBI');
-
-    skip 'The following tests require File::Temp' => 2
-        unless Dancer::ModuleLoader->load('File::Temp');
-
-    my ( $fh, $file ) = File::Temp::tempfile;
-    close $fh or die "Can't close $file: $!\n";
-
-    my $dsn = "dbi:SQLite:dbname=$file";
-
-    set kiokudb_backend_opts => { dsn => $dsn };
-
-    my $session;
-    is(
-        exception { $session = Dancer::Session::KiokuDB->new },
-        undef,
-        'Create session object successfully',
-    );
-
-    isa_ok( $session, 'Dancer::Session::KiokuDB' );
-
-    unlink $file;
-};
+my $s = Dancer::Session::KiokuDB->retrieve( $session->id );
+is_deeply( $s, $session, 'Got session' );
 
