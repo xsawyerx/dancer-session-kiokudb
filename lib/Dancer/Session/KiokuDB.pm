@@ -8,16 +8,13 @@ use base 'Dancer::Session::Abstract';
 
 # to have access to configuration data and a helper for paths
 use KiokuDB;
-use Search::GIN::Extract::Class;
-use Search::GIN::Extract::Attributes;
-use Search::GIN::Extract::Multiplex;
 
 use Dancer::Logger;
 use Dancer::Config    'setting';
 use Dancer::FileUtils 'path';
 use Dancer::ModuleLoader;
 
-my $db;
+my ( $db, $warned );
 
 sub init {
     my $self    = shift;
@@ -37,14 +34,17 @@ sub init {
 
     defined $opts{'create'} or $opts{'create'} = 1;
 
-    Dancer::Logger::warning("Did not provide default session KiokuDB backend");
-    Dancer::Logger::warning("Using default: 'DBI'");
+    if ( not $warned ) {
+        Dancer::Logger::warning("No session KiokuDB backend, using 'DBI'");
+        $warned++;
+    }
 
     Dancer::ModuleLoader->load($class)
         or croak "Cannot load $class: perhaps you need to install it?";
 
     $db = KiokuDB->new(
-        backend => $class->new(%opts),
+        backend       => $class->new(%opts),
+        allow_classes => ['Dancer::Session::KiokuDB'],
     );
 }
 
@@ -75,10 +75,10 @@ sub destroy {
 
 sub flush {
     my $self  = shift;
-    my $id    = delete $self->{'id'};
+    my $id    = $self->{'id'};
     my $scope = $db->new_scope;
 
-    return $db->insert( id => $self );
+    $db->insert( $id => $self );
 }
 
 1;
