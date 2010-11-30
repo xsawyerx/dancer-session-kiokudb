@@ -1,2 +1,6 @@
+0.02    30.11.10
+        * Using KiokuDB::Backend::Hash as default now.
+        * kiokudb_backend_opts no longer required.
+
 0.01    30.11.10
         It starts, and it apparently works. :)
