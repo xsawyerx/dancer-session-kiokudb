@@ -1,3 +1,7 @@
+0.03    08.03.11
+        * FIX: Call init() on SUPER to conform to new Dancer and set ID.
+        (reported by ambs, fix by dams)
+
 0.02    30.11.10
         * Using KiokuDB::Backend::Hash as default now.
         * kiokudb_backend_opts no longer required.
