@@ -22,6 +22,8 @@ sub init {
     my $class   = "KiokuDB::Backend::$backend";
     my %opts    = ();
 
+    $self->SUPER::init(@_);
+
     if ( my $opts = setting('kiokudb_backend_opts') ) {
         if ( ref $opts and ref $opts eq 'HASH' ) {
             %opts = %{$opts};
