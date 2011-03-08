@@ -1,3 +1,7 @@
+0.04    08.03.11
+        * FIX: Call init() on SUPER to conform to new Dancer and set ID.
+        (reported by ambs, fix by dams)
+
 0.03    30.11.10
         * Improving documentation.
         * Updating warning about new default backend.
